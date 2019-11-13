@@ -17,6 +17,14 @@ app.use(bodyParser.urlencoded({
 
 app.use('/user',userRoutes);
 
+app.get('/home',(req,res,next)=>{
+    res.render('home.ejs',{userId:undefined});
+});
+app.get('/home/:userId', (req, res, next) => {
+    let userId=req.params.userId;
+    res.render('home.ejs',{userId:userId});
+});
+
 mongoose
     .connect(
         "mongodb+srv://victory_vivek:vivek123@book-cluster-od9xo.mongodb.net/ResumeBuilderDatabase?retryWrites=true&w=majority", {

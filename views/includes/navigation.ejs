@@ -1,0 +1,31 @@
+<nav class="navbar  mynav shift" role="navigation" id="navbar">
+
+    <ul class="nav navbar-nav navbar-right" id="navlist">
+
+        </li>
+
+        <% if (userId!= undefined ) { %>
+        <% let resumeUrl="/user/resume/"+userId;
+            let editResumeUrl="/user/resume/edit/"+userId %>
+
+        <li><a href="<%= resumeUrl %>"+ class="btn btn-simple" style="font-family: 'DM Serif Text', serif;
+                      color: white;">Resume</a></li>
+        <li><a href="<%= editResumeUrl %>" class="btn btn-simple" style="font-family: 'DM Serif Text', serif;
+                      color: white;">Edit Resume</a></li>
+        <li><a href="/user/logout" class="btn btn-simple" style="font-family: 'DM Serif Text', serif;
+                      color: white;">Log out</a></li>
+
+        <% }else{ %>
+
+        <li><a href="/user/login" class="btn btn-simple" style="font-family: 'DM Serif Text', serif;
+                      color: white;">Log in</a></li>
+        <li><a href="/user/register" class="btn btn-simple" style="font-family: 'DM Serif Text', serif;
+                      color: white;">Sign up</a></li>
+        <% } %>
+
+    </ul>
+
+
+
+
+</nav>

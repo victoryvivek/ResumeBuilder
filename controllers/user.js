@@ -10,6 +10,7 @@ exports.registerUser = (req, res, next) => {
     const password = req.body.user_password;
     const email = req.body.email;
     const contactNo = req.body.contact_no;
+    const address= req.body.address;
 
     bcrypt.hash(password, 12).then(encryptedPassword => {
         const user = new UserModel({
@@ -18,15 +19,16 @@ exports.registerUser = (req, res, next) => {
             userName: userName,
             password: encryptedPassword,
             email: email,
-            contactNo: contactNo
+            contactNo: contactNo,
+            address:address
         });
         return user.save();
     }).then(user => {
         const userResume = new UserResumeModel({
             userId: user._id
         });
-        aboutUser.save();
-        // return res.redirect('/user?id=' + user._id);
+        userResume.save();
+        return res.redirect('/home/' + user._id);
     }).catch(err => {
         console.log("Error: " + err);
         res.render('registration', {
@@ -59,7 +61,7 @@ exports.loginUser = (req, res, next) => {
                 userId: undefined
             });
         }
-        // return res.redirect('/home?id=' + currentUser._id);
+        return res.redirect('/home/' + currentUser._id);
     }).catch(err => {
         console.log("Error: " + err);
         res.render('login', {
@@ -70,14 +72,14 @@ exports.loginUser = (req, res, next) => {
 };
 
 exports.renderRegisterPage = (req, res, next) => {
-    const userId = req.body.contact_no;
+    const userId = undefined;
     res.render('registration', {
         userId: userId
     });
 };
 
 exports.renderLoginPage = (req, res, next) => {
-    const userId = req.body.contact_no;
+    const userId = undefined;
     res.render('login', {
         userId: userId
     });
