@@ -11,4 +11,7 @@ router.get('/login', userControllers.renderLoginPage);
 
 router.get('/logout', userControllers.logoutUser);
 
+router.get('/resume/:userId',userControllers.renderEditResumePage);
+router.post('/resume/edit/:userId',userControllers.editResume);
+
 module.exports=router;

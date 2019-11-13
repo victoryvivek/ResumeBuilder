@@ -88,3 +88,69 @@ exports.renderLoginPage = (req, res, next) => {
 exports.logoutUser = (req, res, next) => {
     return res.redirect('/home');
 };
+
+exports.renderResume=(req,res,next)=>{
+    const userId = req.params.userId;
+    UserResumeModel.findOne({userId:userId}).then(userResume=>{
+        UserModel.findById(userId).then(user=>{
+            return res.render('resume.ejs',{
+                firstName:user.firstName,
+                lastName:user.lastName,
+                email:user.email,
+                contactNo: user.contactNo,
+                address:user.address,
+                profileOverview : userResume.profileOverview,
+                projects : userResume.projects,
+                projectsDescription : userResume.projectsDescription,
+                highlights : userResume.highlights
+            });
+        }).catch(err => {
+            console.log('Error renderResume UserModel ' + err);
+        });
+    }).catch(err => {
+        console.log('Error renderResume ' + err);
+    });
+};
+
+exports.renderEditResumePage = (req, res, next) => {
+    const userId=req.params.userId;
+    let profileOverview;
+    let projects;
+    let projectsDescription;
+    let highlights;
+    UserResumeModel.findOne({userId:userId}).then(userResume=>{
+        profileOverview=userResume.profileOverview;
+        projects=userResume.projects;
+        projectsDescription=userResume.projectsDescription;
+        highlights=userResume.highlights;
+
+        return res.render('editResume.ejs', {
+            profileOverview: profileOverview,
+            projects: projects,
+            projectsDescription: projectsDescription,
+            highlights: highlights
+        });
+    }).catch(err=>{
+        console.log('Error renderEditResumePage '+err);
+    });
+};
+
+exports.editResume = (req, res, next) => {
+    const userId = req.params.userId;
+    const profileOverview= req.body.profileOverview;
+    const projects= req.body.projects;
+    const projectsDescription = req.body.projectsDescription;
+    const highlights = req.body.highlights;
+
+    UserResumeModel.findOne({userId:userId}).then(userResume=>{
+        userResume.profileOverview=profileOverview;
+        userResume.projects=projects;
+        userResume.projectsDescription=projectsDescription;
+        userResume.highlights=highlights;
+        return userResume.save();
+    }).then(userResume=>{
+        return res.redirect('/user/resume/'+userId);
+    }).catch(err => {
+        console.log('Error editResume ' + err);
+    });
+};
