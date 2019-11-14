@@ -26,12 +26,82 @@
     <link rel="profile" href="http://gmpg.org/xfn/11">
     <link rel="stylesheet" href="/css/home.css">
 
-</head>
-<body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+            margin: auto;
+            text-align: center;
+            font-family: arial;
+        }
 
+        .title {
+            color: grey;
+            font-size: 18px;
+        }
+
+        button {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 8px;
+            color: white;
+            background-color: #000;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+        }
+
+        a {
+            text-decoration: none;
+            font-size: 22px;
+            color: black;
+        }
+
+        button:hover,
+        a:hover {
+            opacity: 0.7;
+        }
+    </style>
+
+
+</head>
+<body background="/img/sky.jpg">
     <%- include('includes/navigation.ejs') %>
+
+    <h1 style="color:white;margin-top:100px;margin-left:600px">Developer</h1>
+    <div class="card" style="margin-top:20px">
+        <img src="/img/raman.png" alt="John" style="width:100%">
+        <h1 style="color:white">Raman Mehta</h1>
+        <p class="title" style="color:white">Developer</p>
+        <p style="color:white">IIIT Sonepat</p>
+        <div style="margin: 24px 0;">
+            <a href="https://www.linkedin.com/in/raman-mehta-40635717b/" style="color:white"><i
+                    class="fa fa-linkedin"></i></a>
+            <a href="https://www.facebook.com/raman.mehta.334" style="color:white"><i class="fa fa-facebook"></i></a>
+        </div>
+    </div>
+
+    <button onclick="myFunction()" style="font-color:white;margin-top:100px">Abous Us</button>
+
+    <p id="demo" style="color:white"></p>
+
+    <p id="profile" style="color:white"></p>
+
+    <script>
+        function myFunction() {
+            document.getElementById("demo").innerHTML =
+                "The purpose of our site is to allow different users to sign in and sign up and build an awesome resume and generate a unique url for each resume";
+        }
+
+        function myFunction1() {
+            document.getElementById("profile").innerHTML = "";
+        }
+    </script>
+
 
 
 </body>
-
 </html>
