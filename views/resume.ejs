@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <%- include('includes/head_css.ejs') %>
+    <style media="screen">
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .topnav {
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        .topnav a {
+            float: left;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+
+        .topnav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .topnav a.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <meta charset="utf-8">
+    <title>Resume</title>
+</head>
+
+<body background="/img/sky.jpg">
+    <%- include('includes/navigation.ejs') %>
+
+    <i class='fas fa-user-circle' style='font-size:150px;color:white;margin-left:550px;margin-top:50px'></i>
+    <br>
+    <h2 style="margin-left:550px;color:blue"><%= firstName %> <%= lastName %></h2>
+    <br>
+    <h4 style="margin-left:550px;color:white"><%= email %></h4>
+    <h4 style="margin-left:550px;color:white"><%= contactNo %></h4>
+    <h4 style="margin-left:550px;color:white"><%= address %></h4>
+    <br>
+
+    <h1 style="margin-left:150px;color:blue">Personal Profile</h1>
+    <h4 style="margin-left:200px;color:white"><%= profileOverview %></h4>
+    <br>
+    <h1 style="margin-left:150px;color:blue">Experience and Projects</h1>
+    <h1 style="margin-left:200px;color:white">Experinece</h1>
+    <h2 style="margin-left:250px;color:white">Internship at SAP Labs</h2>
+    <h4 style="margin-left:250px;color:white">It was a wonderful experience</h4>
+    <br>
+
+    <br>
+    <h1 style="margin-left:200px;color:white">Projects</h1>
+
+    <% for(let i=0;i<projects.length;i++){ %>
+
+    <h2 style="margin-left:250px;color:white"><%= projects[i] %></h2>
+    <h4 style="margin-left:250px;color:white"><%= projectsDescription[i] %></h4>
+    <br>
+    <% } %>
+    
+    <h1 style="margin-left:150px;color:blue">Education</h1>
+    <h4 style="margin-left:200px;color:white">+ Add Education</h4>
+    <br>
+    <h1 style="margin-left:150px;color:blue">Certificates</h1>
+    <h4 style="margin-left:200px;color:white">+ Add Certificates</h4>
+</body>
+
+</html>

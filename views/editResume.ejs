@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <%- include('includes/head_css.ejs') %>
+    <title>Edit Resume</title>
+</head>
+
+<body background="/img/sky.jpg">
+
+    <%- include('includes/navigation.ejs') %>
+
+    <h1 style="margin-left:150px;color:white">Edit Project</h1>
+    <hr>
+    <form class="" action="index.html" method="post">
+        <h3 style="margin-left:150px;color:white">Project Name</h3>
+        <input type="text" name="project-name" placeholder="Project Name" style="margin-left:150px">
+
+        <h3 style="margin-left:150px;color:white">Skills</h3>
+        <input type="text" name="skills" placeholder="English Language skills,teachers trainning skils"
+            style="margin-left:150px;color:white">
+
+        <h3 style="margin-left:150px;color:white">App link</h3>
+        <input type="text" name="app link" placeholder="www.github.com" style="margin-left:150px">
+
+        <h3 style="margin-left:150px;color:white">Start Date</h3>
+        <input type="text" name="start date" placeholder="12-09-2018" style="margin-left:150px">
+
+        <h3 style="margin-left:150px;color:white">End date</h3>
+        <input type="text" name="end date" placeholder="12-11-2018" style="margin-left:150px">
+
+        <h3 style="margin-left:150px;color:white">Description</h3>
+        <textarea name="name" rows="8" cols="80" placeholder="type your description................"
+            style="margin-left:150px"></textarea>
+
+        <input type="submit" name="changes" value="Save changes" style="margin-left:150px;color:white;background:blue">
+    </form>
+</body>
+
+</html>

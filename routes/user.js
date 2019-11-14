@@ -11,7 +11,11 @@ router.get('/login', userControllers.renderLoginPage);
 
 router.get('/logout', userControllers.logoutUser);
 
-router.get('/resume/:userId',userControllers.renderEditResumePage);
-router.post('/resume/edit/:userId',userControllers.editResume);
+router.get('/resume/edit/:userId',userControllers.renderEditResumePage);
+router.post('/resume/edit/:userId',userControllers.editResumePage);
+
+router.get('/resume/:userId', userControllers.renderResume);
+
+router.get('/:userId/resume',userControllers.rederResumeWithoutLogin);
 
 module.exports=router;

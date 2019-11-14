@@ -6,8 +6,12 @@
 
         <% if (userId!= undefined ) { %>
         <% let resumeUrl="/user/resume/"+userId;
-            let editResumeUrl="/user/resume/edit/"+userId %>
+            let editResumeUrl="/user/resume/edit/"+userId
+            let homeUrl="/home/"+userId %>
 
+        <li><a href="<%= homeUrl %>" + class="btn btn-simple" style="font-family: 'DM Serif Text', serif;
+                      color: white;">Home</a></li>
+        
         <li><a href="<%= resumeUrl %>"+ class="btn btn-simple" style="font-family: 'DM Serif Text', serif;
                       color: white;">Resume</a></li>
         <li><a href="<%= editResumeUrl %>" class="btn btn-simple" style="font-family: 'DM Serif Text', serif;
@@ -16,6 +20,9 @@
                       color: white;">Log out</a></li>
 
         <% }else{ %>
+
+        <li><a href="/home" class="btn btn-simple" style="font-family: 'DM Serif Text', serif;
+                      color: white;">Home</a></li>
 
         <li><a href="/user/login" class="btn btn-simple" style="font-family: 'DM Serif Text', serif;
                       color: white;">Log in</a></li>

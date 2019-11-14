@@ -1,6 +1,5 @@
 const UserModel = require('../models/user');
 const UserResumeModel=require('../models/userResume');
-
 const bcrypt = require('bcrypt');
 
 exports.registerUser = (req, res, next) => {
@@ -102,7 +101,8 @@ exports.renderResume=(req,res,next)=>{
                 profileOverview : userResume.profileOverview,
                 projects : userResume.projects,
                 projectsDescription : userResume.projectsDescription,
-                highlights : userResume.highlights
+                highlights : userResume.highlights,
+                userId:userId
             });
         }).catch(err => {
             console.log('Error renderResume UserModel ' + err);
@@ -128,14 +128,15 @@ exports.renderEditResumePage = (req, res, next) => {
             profileOverview: profileOverview,
             projects: projects,
             projectsDescription: projectsDescription,
-            highlights: highlights
+            highlights: highlights,
+            userId:userId
         });
     }).catch(err=>{
         console.log('Error renderEditResumePage '+err);
     });
 };
 
-exports.editResume = (req, res, next) => {
+exports.editResumePage = (req, res, next) => {
     const userId = req.params.userId;
     const profileOverview= req.body.profileOverview;
     const projects= req.body.projects;
@@ -152,5 +153,31 @@ exports.editResume = (req, res, next) => {
         return res.redirect('/user/resume/'+userId);
     }).catch(err => {
         console.log('Error editResume ' + err);
+    });
+};
+
+exports.rederResumeWithoutLogin=(req,res,next)=>{
+    const userId = req.params.userId;
+    UserResumeModel.findOne({
+        userId: userId
+    }).then(userResume => {
+        UserModel.findById(userId).then(user => {
+            return res.render('resume.ejs', {
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                contactNo: user.contactNo,
+                address: user.address,
+                profileOverview: userResume.profileOverview,
+                projects: userResume.projects,
+                projectsDescription: userResume.projectsDescription,
+                highlights: userResume.highlights,
+                userId: userId
+            });
+        }).catch(err => {
+            console.log('Error renderResume UserModel ' + err);
+        });
+    }).catch(err => {
+        console.log('Error renderResume ' + err);
     });
 };
