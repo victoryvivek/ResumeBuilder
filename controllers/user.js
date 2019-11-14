@@ -198,7 +198,7 @@ exports.rederResumeWithoutLogin = (req, res, next) => {
                 projects: userResume.projects,
                 projectDescriptions: userResume.projectDescriptions,
                 highlights: userResume.highlights,
-                userId: userId,
+                userId: undefined,
                 companyDescriptions: userResume.companyDescriptions,
                 companyNames: userResume.companyNames,
                 githubLink: userResume.githubLink

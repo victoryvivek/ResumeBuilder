@@ -45,6 +45,13 @@
 <body background="/img/sky.jpg">
     <%- include('includes/navigation.ejs') %>
 
+    <% if (userId != undefined) { %>
+        <div class="container">
+            <button id="share">Share My Resume</button>
+            <p id="resumeUrl" style="color: white;"></p>
+        </div>
+    <% } %>
+
     <i class='fas fa-user-circle' style='font-size:150px;color:white;margin-left:550px;margin-top:50px'></i>
     <br>
     <h2 style="margin-left:550px;color:blue"><%= firstName %> <%= lastName %></h2>
@@ -80,11 +87,18 @@
     <br>
     <% } %>
     
-    <h1 style="margin-left:150px;color:blue">Education</h1>
-    <h4 style="margin-left:200px;color:white"></h4>
-    <br>
     <h1 style="margin-left:150px;color:blue">GitHub Link</h1>
     <h4 style="margin-left:200px;color:white"><%= githubLink %></h4>
+
+
+    <% let shareResumeUrl='localhost:8000/user/'+userId+'/resume'; %>
+    <script>
+        $(document).ready(function(){
+            $("#share").click(function(){
+                $("#resumeUrl").text("<%= shareResumeUrl %>");
+            });
+        });
+    </script>
 </body>
 
 </html>
