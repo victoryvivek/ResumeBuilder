@@ -4,6 +4,10 @@
 <head>
     <meta charset="utf-8">
     <%- include('includes/head_css.ejs') %>
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
     <title>Edit Resume</title>
 </head>
 
@@ -13,29 +17,102 @@
 
     <h1 style="margin-left:150px;color:white">Edit Project</h1>
     <hr>
-    <form class="" action="index.html" method="post">
+    <!-- <form > -->
+
+        
+
         <h3 style="margin-left:150px;color:white">Project Name</h3>
-        <input type="text" name="project-name" placeholder="Project Name" style="margin-left:150px">
+        <input type="text" id="project-name" name="project-name" placeholder="Project Name" style="margin-left:150px">
+
+        <input type="text" id="project-description" name="project-description" placeholder="Project Description"  style="margin-left:150px">
+        <button id="addMoreProjects">Add More Projects</button>
 
         <h3 style="margin-left:150px;color:white">Skills</h3>
-        <input type="text" name="skills" placeholder="English Language skills,teachers trainning skils"
-            style="margin-left:150px;color:white">
+        <input type="text" id="skills" name="skills" placeholder="English Language skills,teachers trainning skils"
+            style="margin-left:150px">
 
-        <h3 style="margin-left:150px;color:white">App link</h3>
-        <input type="text" name="app link" placeholder="www.github.com" style="margin-left:150px">
+        <h3 style="margin-left:150px;color:white">Github Link</h3>
+        <input type="text" id="app-link" name="app-link" placeholder="www.github.com" style="margin-left:150px">
 
-        <h3 style="margin-left:150px;color:white">Start Date</h3>
-        <input type="text" name="start date" placeholder="12-09-2018" style="margin-left:150px">
+        <h3 style="margin-left:150px;color:white">Experience</h3>
+        <input type="text" id="company-name" name="company-name" placeholder="Company Name" style="margin-left:150px">
 
-        <h3 style="margin-left:150px;color:white">End date</h3>
-        <input type="text" name="end date" placeholder="12-11-2018" style="margin-left:150px">
+        <input type="text" id="experience-description" name="experience-description" placeholder="Experience Description" style="margin-left:150px">
+        <button id="addMoreExperiences">Add More Experiences</button>
 
-        <h3 style="margin-left:150px;color:white">Description</h3>
-        <textarea name="name" rows="8" cols="80" placeholder="type your description................"
+        <h3 style="margin-left:150px;color:white">Profile OverView</h3>
+        <textarea id="profile-overview" name="profile-overview" rows="8" cols="80" placeholder="type your description................"
             style="margin-left:150px"></textarea>
 
-        <input type="submit" name="changes" value="Save changes" style="margin-left:150px;color:white;background:blue">
-    </form>
+        <input type="submit" id="save-changes" name="changes" value="Save changes" style="margin-left:150px;color:white;background:blue">
+    
+    <!-- </form> -->
+    <br>
+    <br>
+    <div class="container">
+        <h3>
+            <p id="edit-success" style="color: white;"></p>
+        </h3>
+    </div>
+    
 </body>
+
+<% let editResumeUrl="/user/resume/edit/"+userId; %>
+<script>
+    var projects=[];
+    var projectDescriptions=[];
+
+    var companyNames=[];
+    var companyDescriptions=[];
+
+    $(document).ready(function(){
+        $("#addMoreProjects").click(function(){
+
+            var project = $("#project-name").val();
+            var projectDescription = $("#project-description").val();
+            $("#project-name").val('');
+            $("#project-description").val('');
+
+            projects.push(project);
+            projectDescriptions.push(projectDescription);
+            
+        });
+
+        $("#addMoreExperiences").click(function () {
+
+            var company = $("#company-name").val();
+            var description = $("#experience-description").val();
+            $("#company-name").val('');
+            $("#experience-description").val('');
+
+            companyNames.push(company);
+            companyDescriptions.push(description);
+            
+        });
+
+        $("#save-changes").click(function(){
+
+            console.log('save changes clicked')
+            var skills=$("#skills").val();
+            var githubLink=$("#app-link").val();
+            var profileOverview=$("#profile-overview").val();
+
+            $.post("<%= editResumeUrl %>",{
+                projects:projects,
+                projectDescriptions:projectDescriptions,
+                companyNames:companyNames,
+                companyDescriptions:companyDescriptions,
+                skills:skills,
+                githubLink:githubLink,
+                profileOverview:profileOverview
+
+            },function(data,status){
+                console.log('data '+data.message);
+                $("#edit-success").text(data.message);
+            });
+        });
+
+    });
+</script>
 
 </html>

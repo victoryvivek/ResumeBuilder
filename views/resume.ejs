@@ -59,8 +59,15 @@
     <br>
     <h1 style="margin-left:150px;color:blue">Experience and Projects</h1>
     <h1 style="margin-left:200px;color:white">Experinece</h1>
-    <h2 style="margin-left:250px;color:white">Internship at SAP Labs</h2>
-    <h4 style="margin-left:250px;color:white">It was a wonderful experience</h4>
+
+    <% for (let i = 0; i < companyNames.length; i++) {
+        let companyName = companyNames[i];
+        let companyDescription=companyDescriptions[i]; %>
+
+    <h2 style="margin-left:250px;color:white"><%= companyName %></h2>
+    <h4 style="margin-left:250px;color:white"><%= companyDescription %></h4>
+
+    <% } %>
     <br>
 
     <br>
@@ -69,15 +76,15 @@
     <% for(let i=0;i<projects.length;i++){ %>
 
     <h2 style="margin-left:250px;color:white"><%= projects[i] %></h2>
-    <h4 style="margin-left:250px;color:white"><%= projectsDescription[i] %></h4>
+    <h4 style="margin-left:250px;color:white"><%= projectDescriptions[i] %></h4>
     <br>
     <% } %>
     
     <h1 style="margin-left:150px;color:blue">Education</h1>
-    <h4 style="margin-left:200px;color:white">+ Add Education</h4>
+    <h4 style="margin-left:200px;color:white"></h4>
     <br>
-    <h1 style="margin-left:150px;color:blue">Certificates</h1>
-    <h4 style="margin-left:200px;color:white">+ Add Certificates</h4>
+    <h1 style="margin-left:150px;color:blue">GitHub Link</h1>
+    <h4 style="margin-left:200px;color:white"><%= githubLink %></h4>
 </body>
 
 </html>

@@ -1,5 +1,5 @@
 const UserModel = require('../models/user');
-const UserResumeModel=require('../models/userResume');
+const UserResumeModel = require('../models/userResume');
 const bcrypt = require('bcrypt');
 
 exports.registerUser = (req, res, next) => {
@@ -9,7 +9,7 @@ exports.registerUser = (req, res, next) => {
     const password = req.body.user_password;
     const email = req.body.email;
     const contactNo = req.body.contact_no;
-    const address= req.body.address;
+    const address = req.body.address;
 
     bcrypt.hash(password, 12).then(encryptedPassword => {
         const user = new UserModel({
@@ -19,7 +19,7 @@ exports.registerUser = (req, res, next) => {
             password: encryptedPassword,
             email: email,
             contactNo: contactNo,
-            address:address
+            address: address
         });
         return user.save();
     }).then(user => {
@@ -88,75 +88,7 @@ exports.logoutUser = (req, res, next) => {
     return res.redirect('/home');
 };
 
-exports.renderResume=(req,res,next)=>{
-    const userId = req.params.userId;
-    UserResumeModel.findOne({userId:userId}).then(userResume=>{
-        UserModel.findById(userId).then(user=>{
-            return res.render('resume.ejs',{
-                firstName:user.firstName,
-                lastName:user.lastName,
-                email:user.email,
-                contactNo: user.contactNo,
-                address:user.address,
-                profileOverview : userResume.profileOverview,
-                projects : userResume.projects,
-                projectsDescription : userResume.projectsDescription,
-                highlights : userResume.highlights,
-                userId:userId
-            });
-        }).catch(err => {
-            console.log('Error renderResume UserModel ' + err);
-        });
-    }).catch(err => {
-        console.log('Error renderResume ' + err);
-    });
-};
-
-exports.renderEditResumePage = (req, res, next) => {
-    const userId=req.params.userId;
-    let profileOverview;
-    let projects;
-    let projectsDescription;
-    let highlights;
-    UserResumeModel.findOne({userId:userId}).then(userResume=>{
-        profileOverview=userResume.profileOverview;
-        projects=userResume.projects;
-        projectsDescription=userResume.projectsDescription;
-        highlights=userResume.highlights;
-
-        return res.render('editResume.ejs', {
-            profileOverview: profileOverview,
-            projects: projects,
-            projectsDescription: projectsDescription,
-            highlights: highlights,
-            userId:userId
-        });
-    }).catch(err=>{
-        console.log('Error renderEditResumePage '+err);
-    });
-};
-
-exports.editResumePage = (req, res, next) => {
-    const userId = req.params.userId;
-    const profileOverview= req.body.profileOverview;
-    const projects= req.body.projects;
-    const projectsDescription = req.body.projectsDescription;
-    const highlights = req.body.highlights;
-
-    UserResumeModel.findOne({userId:userId}).then(userResume=>{
-        userResume.profileOverview=profileOverview;
-        userResume.projects=projects;
-        userResume.projectsDescription=projectsDescription;
-        userResume.highlights=highlights;
-        return userResume.save();
-    }).then(userResume=>{
-        return res.redirect('/user/resume/'+userId);
-    }).catch(err => {
-        console.log('Error editResume ' + err);
-    });
-};
-
-exports.rederResumeWithoutLogin=(req,res,next)=>{
+exports.renderResume = (req, res, next) => {
     const userId = req.params.userId;
     UserResumeModel.findOne({
         userId: userId
@@ -170,9 +102,106 @@ exports.rederResumeWithoutLogin=(req,res,next)=>{
                 address: user.address,
                 profileOverview: userResume.profileOverview,
                 projects: userResume.projects,
-                projectsDescription: userResume.projectsDescription,
+                projectDescriptions: userResume.projectDescriptions,
                 highlights: userResume.highlights,
-                userId: userId
+                userId: userId,
+                companyDescriptions: userResume.companyDescriptions,
+                companyNames: userResume.companyNames,
+                githubLink: userResume.githubLink
+            });
+        }).catch(err => {
+            console.log('Error renderResume UserModel ' + err);
+        });
+    }).catch(err => {
+        console.log('Error renderResume ' + err);
+    });
+};
+
+exports.renderEditResumePage = (req, res, next) => {
+    const userId = req.params.userId;
+    let profileOverview;
+    let projects;
+    let projectDescriptions;
+    let highlights;
+    let companyNames;
+    let companyDescriptions;
+    let githubLink;
+    UserResumeModel.findOne({
+        userId: userId
+    }).then(userResume => {
+        profileOverview = userResume.profileOverview;
+        projects = userResume.projects;
+        projectDescriptions = userResume.projectDescriptions;
+        highlights = userResume.highlights;
+        companyNames = userResume.companyNames;
+        companyDescriptions = userResume.companyDescriptions;
+        githubLink = userResume.githubLink;
+
+        return res.render('editResume.ejs', {
+            profileOverview: profileOverview,
+            projects: projects,
+            projectDescriptions: projectDescriptions,
+            highlights: highlights,
+            userId: userId,
+            companyDescriptions: companyDescriptions,
+            companyNames: companyNames,
+            githubLink: githubLink
+        });
+    }).catch(err => {
+        console.log('Error renderEditResumePage ' + err);
+    });
+};
+
+exports.editResumePage = (req, res, next) => {
+    const userId = req.params.userId;
+    const profileOverview = req.body.profileOverview;
+    const projects = req.body.projects;
+    const projectDescriptions = req.body.projectDescriptions;
+    const highlights = req.body.skills;
+    const companyNames = req.body.companyNames;
+    const companyDescriptions = req.body.companyDescriptions;
+    const githubLink = req.body.githubLink;
+
+    console.log(req.body)
+
+    UserResumeModel.findOne({
+        userId: userId
+    }).then(userResume => {
+        userResume.profileOverview = profileOverview;
+        userResume.projects = projects;
+        userResume.projectDescriptions = projectDescriptions;
+        userResume.highlights = highlights;
+        userResume.companyNames = companyNames;
+        userResume.companyDescriptions = companyDescriptions;
+        userResume.githubLink = githubLink;
+        return userResume.save();
+    }).then(userResume => {
+        return res.json({message:"Edit Succesful"});
+    }).catch(err => {
+        console.log('Error editResume ' + err);
+    });
+};
+
+exports.rederResumeWithoutLogin = (req, res, next) => {
+    const userId = req.params.userId;
+    UserResumeModel.findOne({
+        userId: userId
+    }).then(userResume => {
+        UserModel.findById(userId).then(user => {
+            return res.render('resume.ejs', {
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                contactNo: user.contactNo,
+                address: user.address,
+                profileOverview: userResume.profileOverview,
+                projects: userResume.projects,
+                projectDescriptions: userResume.projectDescriptions,
+                highlights: userResume.highlights,
+                userId: userId,
+                companyDescriptions: userResume.companyDescriptions,
+                companyNames: userResume.companyNames,
+                githubLink: userResume.githubLink
             });
         }).catch(err => {
             console.log('Error renderResume UserModel ' + err);

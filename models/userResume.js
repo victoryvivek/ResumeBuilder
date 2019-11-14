@@ -13,10 +13,19 @@ const userResume=new Schema({
     projects:{
         type:Array
     },
-    projectsDescription:{
+    projectDescriptions:{
         type:Array
     },
     highlights:{
+        type:String
+    },
+    companyNames:{
+        type:Array
+    },
+    companyDescriptions:{
+        type:Array
+    },
+    githubLink:{
         type:String
     }
 });
